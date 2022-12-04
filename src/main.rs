@@ -7,6 +7,7 @@ use std::iter::Peekable;
 mod day_1;
 mod day_2;
 mod day_3;
+mod day_4;
 mod runner;
 
 pub struct Lines {
@@ -46,6 +47,8 @@ async fn main() -> Result<()> {
         (2, 2) => day_2::day_2_2,
         (3, 1) => day_3::day_3_1,
         (3, 2) => day_3::day_3_2,
+        (4, 1) => day_4::day_4_1,
+        (4, 2) => day_4::day_4_2,
         _ => panic!(
             "Day {} part {} not implemented",
             opts.day.day_number(),

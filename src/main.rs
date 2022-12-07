@@ -10,6 +10,7 @@ mod day_2;
 mod day_3;
 mod day_4;
 mod day_5;
+mod day_6;
 mod runner;
 
 pub struct Lines {
@@ -62,6 +63,8 @@ async fn main() -> Result<()> {
         (4, 2) => adapt_implementation(day_4::day_4_2),
         (5, 1) => adapt_implementation(day_5::day_5_1),
         (5, 2) => adapt_implementation(day_5::day_5_2),
+        (6, 1) => adapt_implementation(day_6::day_6_1),
+        (6, 2) => adapt_implementation(day_6::day_6_2),
         _ => panic!(
             "Day {} part {} not implemented",
             opts.day.day_number(),

@@ -150,14 +150,14 @@ impl RoundWithOutcome {
     }
 }
 
-pub(crate) fn day_2_1(input: Lines) -> Result<i32> {
+pub fn day_2_1(input: Lines) -> Result<i32> {
     let rounds = input
         .map(|line| line.parse())
         .collect::<Result<Vec<Round>, _>>()?;
     Ok(rounds.iter().map(|round| round.score()).sum())
 }
 
-pub(crate) fn day_2_2(input: Lines) -> Result<i32> {
+pub fn day_2_2(input: Lines) -> Result<i32> {
     let rounds = input
         .map(|line| line.parse())
         .collect::<Result<Vec<RoundWithOutcome>, _>>()?;

@@ -85,7 +85,7 @@ impl Runner {
     pub fn new() -> Result<Self> {
         let session_key = env::var("SESSION_COOKIE")
             .map_err(|_| anyhow!("SESSION_COOKIE environment variable is not set"))?;
-        let cookie = format!("session={}; Domain=.adventofcode.com", session_key);
+        let cookie = format!("session={session_key}; Domain=.adventofcode.com");
         let url = "https://adventofcode.com/".parse::<Url>()?;
 
         let jar = Jar::default();
@@ -153,7 +153,7 @@ impl Runner {
             .text()
             .collect::<Vec<_>>()
             .join("\n");
-        println!("{}", response_text);
+        println!("{response_text}");
         Ok(())
     }
 }

@@ -24,6 +24,7 @@ dependencies = [
  "anyhow",
  "clap",
  "itertools",
+ "once_cell",
  "regex",
  "reqwest",
  "scraper",

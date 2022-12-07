@@ -1,6 +1,7 @@
 use crate::runner::{Opts, Runner};
 use anyhow::Result;
 use clap::Parser;
+use std::fmt::Display;
 
 use std::iter::Peekable;
 
@@ -8,6 +9,7 @@ mod day_1;
 mod day_2;
 mod day_3;
 mod day_4;
+mod day_5;
 mod runner;
 
 pub struct Lines {
@@ -34,6 +36,15 @@ impl Lines {
     }
 }
 
+fn adapt_implementation<T: 'static + Display>(
+    implementation: fn(Lines) -> Result<T>,
+) -> Box<dyn Fn(Lines) -> Result<String>> {
+    Box::new(move |lines| {
+        let result = implementation(lines)?;
+        Ok(format!("{result}"))
+    })
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let opts: Opts = Opts::parse();
@@ -41,14 +52,16 @@ async fn main() -> Result<()> {
     let input = runner.get_input(opts.day, opts.force_download).await?;
 
     let implementation = match (opts.day.day_number(), opts.part.part_number()) {
-        (1, 1) => day_1::day_1_1,
-        (1, 2) => day_1::day_1_2,
-        (2, 1) => day_2::day_2_1,
-        (2, 2) => day_2::day_2_2,
-        (3, 1) => day_3::day_3_1,
-        (3, 2) => day_3::day_3_2,
-        (4, 1) => day_4::day_4_1,
-        (4, 2) => day_4::day_4_2,
+        (1, 1) => adapt_implementation(day_1::day_1_1),
+        (1, 2) => adapt_implementation(day_1::day_1_2),
+        (2, 1) => adapt_implementation(day_2::day_2_1),
+        (2, 2) => adapt_implementation(day_2::day_2_2),
+        (3, 1) => adapt_implementation(day_3::day_3_1),
+        (3, 2) => adapt_implementation(day_3::day_3_2),
+        (4, 1) => adapt_implementation(day_4::day_4_1),
+        (4, 2) => adapt_implementation(day_4::day_4_2),
+        (5, 1) => adapt_implementation(day_5::day_5_1),
+        (5, 2) => adapt_implementation(day_5::day_5_2),
         _ => panic!(
             "Day {} part {} not implemented",
             opts.day.day_number(),
@@ -58,7 +71,7 @@ async fn main() -> Result<()> {
 
     let result = implementation(input)?;
 
-    println!("{}", result);
+    println!("{result}");
     println!();
 
     if opts.send {
